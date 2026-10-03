@@ -1,0 +1,3451 @@
+/* fallow-ignore-file unused-file -- linked via <link> in index.html/floating.html, not a JS import */
+/* ═══════════════════════════════════════════════════════════
+   FONTS
+═══════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/Geist-Variable.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/GeistMono-Variable.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "Geist Pixel";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/GeistPixel-Line.woff2") format("woff2");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: dark;
+
+  /* ── Colors: Page ── */
+  --bg-page:    oklch(0% 0 0);
+  --background: oklch(0% 0 0);
+
+  /* ── Colors: Foreground ── */
+  --foreground:        oklch(90% 0 0);
+  --subtle-foreground: oklch(62% 0 0);
+  --muted-foreground:  oklch(43.71% 0 0);
+
+  /* ── Colors: Surface ── */
+  --card:            oklch(20% 0 0);
+  --card-elevated:   oklch(24% 0 0);
+  --card-foreground: oklch(25.91% 0 0);
+  --surface-raised:  oklch(18% 0 0);
+  --muted:           oklch(22% 0 0);
+  --input:           oklch(16% 0 0);
+
+  /* ── Colors: Border ── */
+  --border:        oklch(1 0 0 / 0);     /* zero-alpha — use --border-strong for visible borders */
+  --border-strong: oklch(1 0 0 / 0.12);
+  --border-subtle: oklch(1 0 0 / 0.03);
+
+  /* ── Colors: Accent ── */
+  --accent:            oklch(84.1% 0.238 128.85);
+  --accent-light:      oklch(100 0 0);
+  --accent-soft:       oklch(84.1% 0.238 128.85 / 0.14);
+  --accent-foreground: oklch(15% 0.01 270);
+  --ring:              oklch(84.1% 0.238 128.85);
+  --ring-soft:         oklch(84.1% 0.238 128.85 / 0.18);
+
+  /* ── Colors: Semantic ── */
+  --destructive:      oklch(0.7292 0.1602 24.94);
+  --destructive-soft: oklch(0.6478 0.2129 27.73 / 0.18);
+  --success:          oklch(0.8915 0.1381 164.18);
+  --success-soft:     oklch(0.6959 0.1491 162.48 / 0.18);
+  --warning:          oklch(0.8591 0.1147 79.19);
+  --warning-soft:     oklch(76.86% 0.1647 70.08 / 0.18);
+
+  /* ── Colors: Level scale ── */
+  --level-ok:           oklch(84.59% 0.2026 156.3);
+  --level-ok-soft:      oklch(0.8459 0.2026 156.3 / 0.18);
+  --level-warn:         oklch(88% 0.163 92);
+  --level-warn-soft:    oklch(88% 0.163 92 / 0.18);
+  --level-high:         oklch(72% 0.181 46);
+  --level-high-soft:    oklch(72% 0.181 46 / 0.18);
+  --level-critical:     oklch(58% 0.214 17);
+  --level-critical-soft: oklch(58% 0.214 17 / 0.18);
+
+  /* ── Colors: Misc ── */
+  --chip-currency: oklch(63% 0.264 304);
+
+  /* ── Typography: Families ── */
+  --font-sans:  "Geist", "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono:  "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-pixel: "Geist Pixel", "Geist Mono", ui-monospace, monospace;
+
+  /* ── Typography: Scale ── */
+  --text-xs:   10px;
+  --text-sm:   12px;
+  --text-base: 13px;
+  --text-md:   14px;
+  --text-xl:   18px;
+  --text-2xl:  24px;
+  --text-3xl:  36px;
+  --text-4xl:  56px;
+
+  /* ── Typography: Weight ── */
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+
+  /* ── Typography: Leading ── */
+  --leading-none:   1;
+  --leading-snug:   1.4;
+  --leading-normal: 1.5;
+
+  /* ── Spacing ── */
+  --space-none:  0px;
+  --space-0:  2px;
+  --space-1:  4px;
+  --space-2:  6px;
+  --space-3:  8px;
+  --space-4:  10px;
+  --space-5:  12px;
+  --space-6:  14px;
+  --space-7:  16px;
+  --space-8:  20px;
+  --space-9:  24px;
+  --space-10: 32px;
+  --space-11: 40px;
+
+  /* ── Radius ── */
+  --radius:      12px;
+  --radius-none: 0px;
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-pill: 999px;
+
+  /* ── Shadows ── */
+  /* Three layers in one declaration: a top hairline that catches the light, a
+     full inner ring that draws the component's own edge, and an outer ring
+     that seats it against the surface behind. The outer ring is what replaced
+     every `border: 1px solid var(--border-subtle)` these surfaces used to
+     carry — reach for the token, never re-add the border. */
+  --inner-light:
+    inset 0 1px 0 0 oklch(100% 0 0 / 0.11),
+    inset 0 0 0 1px oklch(100% 0 0 / 0.06),
+    0 0 0 1px oklch(13.44% 0 0 / 0.7);
+  /* The same stack lit from below — the hairline moves to the bottom edge.
+     Only .account-inner uses it, so the one recessed surface in the app reads
+     as recessed instead of raised. */
+  --inner-light-up:
+    inset 0 -1px 0 0 oklch(100% 0 0 / 0.11),
+    inset 0 0 0 1px oklch(100% 0 0 / 0.06),
+    0 0 0 1px oklch(13.44% 0 0 / 0.7);
+
+  /* ── Transitions ── */
+  --duration-fast:   120ms;
+  --duration-base:   140ms;
+  --duration-normal: 150ms;
+  --duration-slow:   180ms;
+  --duration-enter:  220ms;
+  --ease:            ease;
+  /* The CSS builtin `ease-out` is too weak to read as intentional — the
+     canonical ease-out here is the quart curve, and the two names are aliases. */
+  --ease-out:        cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quart:  var(--ease-out);
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-press:      cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-press:  120ms;
+  --duration-spin:   700ms;
+  /* Read by renderer.js — keep these as the single source of truth for the
+     view/tab crossfades so CSS and JS can never drift apart. */
+  --duration-view-fade: 150ms;
+  --duration-tab-fade:  110ms;
+  /* Read by renderer.js — --duration-banner-leave drives the timeout that
+     removes a banner after its [data-leaving] transition finishes. */
+  --duration-banner-enter: 220ms;
+  --duration-banner-leave: 160ms;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════════════════ */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  color: var(--foreground);
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
+}
+
+button,
+textarea,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(40% 0.008 270);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════════ */
+
+/* The window is undecorated + transparent (tauri.conf.json), so this box is the
+   app's visible frame — it paints the page background and draws the rounded edge.
+   Keep both here, not on `body`: CSS propagates a body background up to the
+   canvas, which fills the whole viewport square and ignores any radius, so a
+   frame defined on `body` renders as square corners no matter the border-radius. */
+.shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  flex: 1 0 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--bg-page);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--inner-light);
+}
+
+.shell-scroll {
+  /* Anchors the outgoing view during the view crossfade — renderActiveView
+     parks it out of flow so the incoming view can come up in its place. */
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+body[data-view="onboard"] .shell {
+  padding: 0;
+  overflow: hidden;
+}
+
+body[data-view="onboard"] .shell-scroll {
+  overflow: hidden;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  transition: opacity var(--duration-view-fade) var(--ease-out), transform var(--duration-view-fade) var(--ease-out);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════════════════════ */
+
+.topbar {
+  padding: var(--space-none);
+  flex-shrink: 0;
+  -webkit-app-region: drag;
+}
+
+.topbar-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-0);
+  padding: var(--space-5) var(--space-8) 11px var(--space-8);
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--inner-light);
+  -webkit-app-region: drag;
+}
+
+body[data-view="onboard"] .topbar {
+  padding: var(--space-3) var(--space-3) 0;
+}
+
+body[data-view="onboard"] .topbar-card {
+  justify-content: flex-end;
+  background: transparent;
+  padding: var(--space-3) var(--space-7);
+}
+
+body[data-view="onboard"] .topbar .brand,
+body[data-view="onboard"] #notificationState,
+body[data-view="onboard"] #refreshButton,
+body[data-view="onboard"] #settingsButton {
+  display: none;
+}
+
+body[data-view="onboard"] .top-actions {
+  gap: var(--space-1);
+}
+
+body[data-view="onboard"] .window-controls {
+  gap: var(--space-1);
+  margin-left: 0;
+  padding-left: 0;
+  border-left: none;
+}
+
+body[data-view="onboard"] .window-control-btn {
+  width: var(--space-9);
+  height: var(--space-9);
+  border-radius: var(--radius-xs);
+  color: oklch(52% 0 0);
+}
+
+body[data-view="onboard"] .window-control-btn svg {
+  width: var(--space-9);
+  height: var(--space-9);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.brand-logo {
+  /* 78×18 keeps the 103×24 source's aspect and leaves room for the
+     notification button in the topbar. */
+  height: 18px;
+  width: 78px;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-none);
+  -webkit-app-region: no-drag;
+}
+
+/* ─── Topbar divider ─── */
+
+.top-actions-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--border-strong);
+  flex-shrink: 0;
+  margin: 0 var(--space-1);
+}
+
+body[data-view="onboard"] .top-actions-divider {
+  display: none;
+}
+
+/* ─── Window controls ─── */
+
+.window-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-0);
+  border-left: none;
+  padding-left: 0;
+}
+
+.window-control-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--subtle-foreground);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.window-control-btn:hover {
+  background: var(--muted);
+  color: var(--foreground);
+  filter: none;
+}
+
+.window-control-btn#closeButton:hover {
+  background: var(--destructive-soft);
+  color: var(--destructive);
+}
+
+.window-control-btn svg {
+  width: var(--space-7);
+  height: var(--space-7);
+  fill: currentColor;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   APP FOOTER
+═══════════════════════════════════════════════════════════ */
+
+.app-footer {
+  padding: var(--space-none);
+  flex-shrink: 0;
+}
+
+.footer-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--inner-light);
+}
+
+body[data-view="onboard"] .app-footer {
+  display: none;
+}
+
+.footer-updated-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  color: var(--subtle-foreground);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: -0.02em;
+}
+
+/* The stamp is centred, so the leftover space on each side becomes a rule —
+   two flex children of equal grow, which keeps it centred whatever the clock
+   reads in any language. */
+.footer-updated-row::before,
+.footer-updated-row::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.footer-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+}
+
+.footer-link,
+.footer-quit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: auto;
+  min-width: 0;
+  padding: var(--space-7) var(--space-8);
+  border-radius: var(--radius-lg);
+  /* Two fills, as the design has them: a 3% white wash over the tonal
+     surface, which lifts the button a step without adding a sixth grey. */
+  background: linear-gradient(oklch(100% 0 0 / 0.03), oklch(100% 0 0 / 0.03)), var(--card-foreground);
+  color: var(--foreground);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  box-shadow: var(--inner-light);
+  transition: filter var(--duration-fast) var(--ease), transform var(--duration-press) var(--ease-press);
+}
+
+.footer-link span,
+.footer-quit-btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.footer-link:hover,
+.footer-quit-btn:hover {
+  filter: brightness(1.15);
+  color: var(--foreground);
+}
+
+.footer-link:active,
+.footer-quit-btn:active {
+  transform: scale(0.97);
+  filter: brightness(0.88);
+}
+
+.footer-link:focus-visible,
+.footer-quit-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-0);
+}
+
+.footer-link svg,
+.footer-quit-btn svg {
+  width: var(--space-5);
+  height: var(--space-5);
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ONBOARDING
+═══════════════════════════════════════════════════════════ */
+
+.onboard {
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0;
+  text-align: center;
+  padding: 0 var(--space-2) var(--space-2);
+  flex: 1;
+  overflow: hidden;
+}
+
+.onboard-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-11);
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  padding: 18px var(--space-7) 22px;
+}
+
+
+.onboard-logo {
+  width: 132px;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.onboard-copy {
+  display: block;
+  margin: 0 auto;
+  color: var(--subtle-foreground);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-snug);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.copy-strong,
+.copy-muted {
+  display: inline;
+  padding: 0 var(--space-0);
+}
+
+.copy-strong {
+  color: var(--foreground);
+}
+
+.copy-muted {
+  color: var(--subtle-foreground);
+}
+
+.feature-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--space-9);
+  margin: 0 var(--space-0);
+  padding: var(--space-1) var(--space-2);
+  color: var(--accent-foreground);
+  vertical-align: middle;
+}
+
+.feature-chip svg {
+  width: var(--space-7);
+  height: var(--space-7);
+  fill: currentColor;
+}
+
+.feature-chip-roadmap {
+  background: var(--warning);
+  border-radius: 10px 4px 10px 4px;
+}
+
+.feature-chip-currency {
+  background: var(--chip-currency);
+  border-radius: 6px;
+}
+
+.feature-chip-bullhorn {
+  padding-inline: var(--space-3);
+  background: var(--destructive);
+  border-radius: var(--radius-pill);
+}
+
+.onboard-auth-card {
+  width: 100%;
+  min-height: 122px;
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  box-shadow: var(--inner-light);
+}
+
+.onboard-secondary {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--subtle-foreground);
+  max-width: 260px;
+  line-height: var(--leading-snug);
+}
+
+.onboard-waiting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+/* The waiting screen can sit still for up to 150s while Siphon waits on the
+   browser callback, so it gets the one moving element on that screen. It is
+   the download notice's scanline grid rather than a new treatment: same "this
+   is in flight" vocabulary, and currentColor keeps the loader reading as part
+   of the sentence instead of importing the level scale into a place where it
+   would mean nothing (Orthogonal Systems Rule — the same reasoning written on
+   .dmx-scan itself). Gradient text is not an option here: DESIGN.md §6 bans
+   background-clip: text outright, and duplicating the string into generated
+   content would make a screen reader announce the headline twice. */
+.onboard-waiting-headline-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.onboard-url-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  margin-top: var(--space-2);
+  text-align: left;
+}
+
+.onboard-url-label {
+  font-size: var(--text-sm);
+  color: var(--subtle-foreground);
+}
+
+/* Deepest surface in the stack (DESIGN.md §4) — the URL is data pushed into
+   the card, not a raised control. Flat by default: no shadow. */
+.onboard-url-box {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--input);
+}
+
+/* The authorize URL is long. Wrapping beats truncation here: a user who cannot
+   copy (clipboard blocked) must still be able to read it to retype, and an
+   ellipsis would hide the query string that carries the whole flow. Capped so
+   a pathological URL cannot push Cancel off the card. */
+.onboard-url {
+  flex: 1;
+  min-width: 0;
+  max-height: 54px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+/* 28×28 is the standard icon-button footprint (DESIGN.md §5, and
+   `styles.css:2093`). The 24×24 compact size is reserved for the cost-info and
+   banner-dismiss exceptions — this button is a primary affordance, not chrome. */
+.onboard-url-copy {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--subtle-foreground);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+/* Both icons stack in the same slot (transitions-dev "Icon swap") — the copy
+   glyph is centered via inset:0 + margin:auto instead of relying on the
+   button's flex centering, since that only centers a single child. */
+.onboard-url-copy svg {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  transition: opacity var(--duration-slow) var(--ease-out-quart),
+    filter var(--duration-slow) var(--ease-out-quart),
+    transform var(--duration-slow) var(--ease-out-quart);
+}
+
+.onboard-url-copy svg[data-copy-icon='check'] {
+  opacity: 0;
+  filter: blur(2px);
+  transform: scale(0.25);
+}
+
+.onboard-url-copy:hover {
+  background: var(--card-elevated);
+  color: var(--foreground);
+}
+
+.onboard-url-copy:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Confirmation is a state on the button, not a toast — the feedback belongs
+   where the click happened. */
+.onboard-url-copy[data-copied='true'] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.onboard-url-copy[data-copied='true'] svg[data-copy-icon='glyph'] {
+  opacity: 0;
+  filter: blur(2px);
+  transform: scale(0.25);
+}
+
+.onboard-url-copy[data-copied='true'] svg[data-copy-icon='check'] {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/* Mono, not Pixel: a deadline clock is metadata, not a primary reading
+   (DESIGN.md §3, Mono-for-Metadata vs Pixel-for-Data). Deliberately quiet — it
+   informs, it does not pressure. */
+.onboard-countdown {
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--subtle-foreground);
+}
+
+.onboard-hatch-notice {
+  width: 100%;
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--subtle-foreground);
+  text-align: left;
+}
+
+.onboard-fallback-notice {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--subtle-foreground);
+}
+
+.onboard-code-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  width: 100%;
+  margin-top: 0;
+  text-align: left;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════════════════════ */
+
+.auth-title {
+  margin-bottom: var(--space-7);
+  width: 100%;
+  text-align: center;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-none);
+}
+
+.auth-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  width: 100%;
+}
+
+.auth-form-fields textarea {
+  width: 100%;
+  min-height: 64px;
+  height: 64px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid oklch(100% 0 0 / 0.10);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 20px;
+}
+
+.auth-form-fields textarea::placeholder {
+  color: var(--subtle-foreground);
+}
+
+/* Border tween owns the visible error state; the shake is a separate,
+   orthogonal class so it can replay (remove -> reflow -> re-add, see
+   showCodeInputError in renderer.js) on a second failed attempt without
+   flickering .is-error off and back on. */
+#onboardCodeInput.is-error {
+  border-color: var(--destructive);
+}
+
+#onboardCodeInput.is-shaking {
+  animation: onboardCodeShake 240ms var(--ease-out-expo);
+}
+
+@keyframes onboardCodeShake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(6px); }
+  50%      { transform: translateX(-6px); }
+  75%      { transform: translateX(4px); }
+}
+
+.auth-button-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.auth-button-stack .btn-save,
+.auth-button-stack .btn-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--space-11);
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  line-height: 20px;
+  cursor: pointer;
+  transition: filter var(--duration-fast) var(--ease), background var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.auth-button-stack .btn-save {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.auth-button-stack .btn-save:hover {
+  filter: brightness(1.08);
+}
+
+.auth-button-stack .btn-cancel {
+  background: transparent;
+  color: var(--foreground);
+}
+
+.auth-button-stack .btn-cancel:hover {
+  background: var(--muted);
+  filter: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   QUOTA / CARDS
+═══════════════════════════════════════════════════════════ */
+
+.card {
+  position: relative;
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-7);
+  box-shadow: var(--inner-light);
+}
+
+.card-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--subtle-foreground);
+}
+
+.card-eyebrow svg {
+  width: var(--space-6);
+  height: var(--space-6);
+  fill: currentColor;
+}
+
+.card-eyebrow-row {
+  width: 100%;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.card-eyebrow-left {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.quota-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-none);
+  padding: var(--space-7);
+}
+
+.quota-panel > .meter {
+  margin-top: var(--space-1);
+}
+
+.quota-headline {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.quota-percent {
+  font-family: var(--font-pixel);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-normal);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--accent-light);
+  font-variant-numeric: tabular-nums;
+  /* 900ms, matching `.meter`'s --seg-* drift: the number and the bar report the
+     same level change and must land on the new colour together. */
+  transition: --quota-l 900ms var(--ease-out-quart),
+    --quota-c 900ms var(--ease-out-quart),
+    --quota-h 900ms var(--ease-out-quart);
+}
+
+.quota-value-group {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.quota-suffix {
+  font-family: var(--font-pixel);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--foreground);
+  text-transform: lowercase;
+}
+
+.quota-suffix:empty {
+  display: none;
+}
+
+/* Extra-usage card: compact quota-panel variant for purchased credits.
+   Auto-hidden (via [hidden]) on accounts without the feature. */
+.quota-panel--extra {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-7);
+}
+
+.quota-headline--extra {
+  margin-top: var(--space-6);
+}
+
+.quota-credits {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-pixel);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.9;
+}
+
+.quota-credits-used {
+  font-size: var(--text-2xl);
+  color: var(--foreground);
+}
+
+.quota-credits-sep,
+.quota-credits-limit {
+  font-size: var(--text-xl);
+  color: var(--subtle-foreground);
+}
+
+.quota-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--subtle-foreground);
+  margin-top: var(--space-8);
+}
+
+.quota-meta .reset-line {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.quota-pace {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-none) var(--space-2);
+  min-height: var(--space-8);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-none);
+  color: var(--subtle-foreground);
+  background: var(--card-elevated);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+/* CORES DO TEXTO DO PACE BADGE*/
+
+.quota-pace[data-status="on_track"] {
+  color: var(--success);
+}
+
+.quota-pace[data-status="high_pace"] {
+  color: var(--warning);
+}
+
+.quota-pace[data-status="likely_out"] {
+  color: var(--destructive);
+}
+
+.quota-pace[data-status="depleted"] {
+  color: var(--destructive);
+}
+
+.quota-pace-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.peak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-none) var(--space-none) var(--space-none) var(--space-2);
+  min-height: var(--space-7);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-none);
+  color: var(--warning);
+  background: var(--warning-soft);
+  width: fit-content;
+}
+
+.peak-badge .cost-info-btn {
+  width: var(--space-8);
+  height: var(--space-8);
+}
+
+.peak-badge .cost-info-btn svg {
+  width: var(--space-5);
+  height: var(--space-5);
+  fill: var(--warning);
+}
+
+/* ─── Cost grid ─── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-1);
+}
+
+.grid .card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding:  var(--space-7);
+  min-height: 120px;
+}
+
+.cost-card > .card-eyebrow {
+  margin-bottom: 0;
+}
+
+.cost-card > .cost-estimate-row {
+  margin-bottom: var(--space-7);
+}
+
+.stat-value {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: var(--space-2);
+  gap: 0;
+  font-family: var(--font-pixel);
+  font-size: 20px;
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-none);
+  letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-light);
+}
+
+/* The refresh glow lives on a pseudo-element so the pulse animates `opacity`
+   (compositor) instead of `box-shadow` (a full repaint of every card, 900ms,
+   on loop). The shadow itself is painted once and never re-rasterized. */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--level-ok) 18%, transparent),
+    inset 0 0 18px color-mix(in srgb, var(--level-ok) 8%, transparent);
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+body[data-refreshing="true"] .card::after {
+  animation: refreshGlow 900ms var(--ease) infinite alternate;
+}
+
+@keyframes refreshGlow {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-refreshing="true"] .card::after {
+    animation: none;
+    opacity: 0.65;
+  }
+}
+
+.cost-symbol {
+  font-size: 20px;
+  letter-spacing: -0.06em;
+}
+
+.cost-amount {
+  font-size: 20px;
+  letter-spacing: -0.06em;
+}
+
+.cost-estimate-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--subtle-foreground);
+}
+
+.cost-tokens {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--subtle-foreground);
+  line-height: var(--leading-none);
+  min-height: 0;
+}
+
+.cost-info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-9);
+  height: var(--space-9);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: var(--subtle-foreground);
+  cursor: help;
+  transition: color var(--duration-base) var(--ease);
+}
+
+.cost-info-btn:hover {
+  color: var(--foreground);
+}
+
+.cost-info-btn svg {
+  width: var(--space-5);
+  height: var(--space-5);
+  fill: currentColor;
+}
+
+/* ─── Tooltip ─── */
+
+/* Shared by the three .cost-info-btn triggers (Today/Month cost info +
+   peak-hours info). position:fixed so it escapes .shell-scroll's
+   overflow-y:auto instead of being clipped by it — renderer.js's
+   positionTooltip() writes top/left from getBoundingClientRect() and clamps
+   left to the viewport on every show. */
+.tooltip {
+  position: fixed;
+  z-index: 20;
+  max-width: 240px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--card-elevated);
+  box-shadow: var(--inner-light);
+  color: var(--foreground);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  white-space: pre-line; /* home.peakHoursTooltip carries a literal \n */
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+  /* Hide rule (the default): no delay, so leaving a trigger closes the
+     bubble immediately. */
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+
+.tooltip[data-show="true"] {
+  opacity: 1;
+  transform: scale(1);
+  /* The appear delay belongs only to this rule, so a quick hover-past never
+     shows it. */
+  transition: opacity var(--duration-base) var(--ease-out) 80ms,
+    transform var(--duration-base) var(--ease-out) 80ms;
+}
+
+/* ─── Last updated / DMX ─── */
+
+.dmx-wrap {
+  display: grid;
+  grid-template-columns: repeat(4, var(--space-0));
+  grid-template-rows: repeat(4, var(--space-0));
+  gap: 1px;
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
+
+.dmx-dot {
+  width: var(--space-0);
+  height: var(--space-0);
+  border-radius: 50%;
+  background: var(--level-ok);
+}
+
+.dmx-inactive {
+  opacity: 0 !important;
+}
+
+/* Used to be a JS rAF loop computing a double-beat sine pulse every frame.
+   Sampled into keyframes it's compositor-driven instead, and — unlike the
+   old loop, which had no reduced-motion gate — opt-in: dots sit at their
+   resting opacity until motion is explicitly allowed. */
+.dmx-dot[data-zone="c"] {
+  opacity: 0.35;
+}
+
+.dmx-dot[data-zone="i"] {
+  opacity: 0.16;
+}
+
+@keyframes dmxPulseCenter {
+  0%   { opacity: 0.35; }
+  12%  { opacity: 1; }
+  38%  { opacity: 1; }
+  50%  { opacity: 0.35; }
+  62%  { opacity: 0.87; }
+  75%  { opacity: 0.35; }
+  100% { opacity: 0.35; }
+}
+
+@keyframes dmxPulseInner {
+  0%   { opacity: 0.16; }
+  12%  { opacity: 0.71; }
+  25%  { opacity: 0.6; }
+  38%  { opacity: 0.47; }
+  50%  { opacity: 0.16; }
+  62%  { opacity: 0.4; }
+  75%  { opacity: 0.16; }
+  100% { opacity: 0.16; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dmx-dot[data-zone="c"] {
+    animation: dmxPulseCenter 1400ms linear infinite;
+  }
+
+  .dmx-dot[data-zone="i"] {
+    animation: dmxPulseInner 1400ms linear infinite;
+  }
+}
+
+/* dotm-square-10 ("CRT glide"): a scanline steps down the 5x5 grid and each row
+   fades behind it on an exponential decay — 0.08 + 0.92·e^(−0.72·age), sampled
+   into five discrete 120ms steps of a 600ms cycle (the reference's speed 2.5).
+   Same trade as .dmx-wrap: static markup, CSS keyframes, opacity only. The
+   reference's ±7% per-column warp is dropped — invisible at 14px and it would
+   cost 25 keyframe sets instead of 5. Dots take currentColor so the grid
+   follows the banner's text color. */
+.dmx-scan {
+  display: grid;
+  grid-template-columns: repeat(5, var(--space-0));
+  grid-template-rows: repeat(5, var(--space-0));
+  gap: 1px;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.dmx-scan .dmx-dot {
+  background: currentColor;
+}
+
+.dmx-scan .dmx-dot[data-row="0"] {
+  opacity: 0.46;
+}
+
+.dmx-scan .dmx-dot[data-row="1"] {
+  opacity: 0.365;
+}
+
+.dmx-scan .dmx-dot[data-row="2"] {
+  opacity: 0.27;
+}
+
+.dmx-scan .dmx-dot[data-row="3"] {
+  opacity: 0.175;
+}
+
+.dmx-scan .dmx-dot[data-row="4"] {
+  opacity: 0.08;
+}
+
+@keyframes dmxScanRow0 {
+  0%   { opacity: 1; }
+  20%  { opacity: 0.528; }
+  40%  { opacity: 0.298; }
+  60%  { opacity: 0.186; }
+  80%  { opacity: 0.132; }
+  100% { opacity: 1; }
+}
+
+@keyframes dmxScanRow1 {
+  0%   { opacity: 0.08; }
+  20%  { opacity: 1; }
+  40%  { opacity: 0.528; }
+  60%  { opacity: 0.298; }
+  80%  { opacity: 0.186; }
+  100% { opacity: 0.08; }
+}
+
+@keyframes dmxScanRow2 {
+  0%   { opacity: 0.08; }
+  40%  { opacity: 1; }
+  60%  { opacity: 0.528; }
+  80%  { opacity: 0.298; }
+  100% { opacity: 0.08; }
+}
+
+@keyframes dmxScanRow3 {
+  0%   { opacity: 0.08; }
+  60%  { opacity: 1; }
+  80%  { opacity: 0.528; }
+  100% { opacity: 0.08; }
+}
+
+@keyframes dmxScanRow4 {
+  0%   { opacity: 0.08; }
+  80%  { opacity: 1; }
+  100% { opacity: 0.08; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dmx-scan .dmx-dot[data-row="0"] {
+    animation: dmxScanRow0 600ms step-end infinite;
+  }
+
+  .dmx-scan .dmx-dot[data-row="1"] {
+    animation: dmxScanRow1 600ms step-end infinite;
+  }
+
+  .dmx-scan .dmx-dot[data-row="2"] {
+    animation: dmxScanRow2 600ms step-end infinite;
+  }
+
+  .dmx-scan .dmx-dot[data-row="3"] {
+    animation: dmxScanRow3 600ms step-end infinite;
+  }
+
+  .dmx-scan .dmx-dot[data-row="4"] {
+    animation: dmxScanRow4 600ms step-end infinite;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NOTIFICATION BADGE
+═══════════════════════════════════════════════════════════ */
+
+/* Sits in the topbar next to refresh and settings, so it is an .icon-button
+   first: that rule owns the 28×28 footprint, colour and hover. What is left
+   here is the toggle's own behaviour — the label it carries for assistive
+   tech, and the crossfade between the two bells. */
+.notif-badge {
+  flex-shrink: 0;
+  transition: background var(--duration-base) var(--ease), color var(--duration-base) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+/* The button reads as an icon, but its state ("Notify reset" / "Don't notify
+   reset") is the accessible name, so the label is hidden rather than removed. */
+.notif-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.notif-badge:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-0);
+}
+
+.notif-badge[data-tone="accent"],
+.notif-badge[data-tone="accent"] svg {
+  color: var(--subtle-foreground);
+}
+
+.notif-badge[data-tone="muted"],
+.notif-badge[data-tone="muted"] svg {
+  color: var(--subtle-foreground);
+}
+
+.notif-badge svg {
+  width: var(--space-7);
+  height: var(--space-7);
+  fill: currentColor;
+}
+
+/* ─── Notification icon crossfade ─── */
+
+.notif-icon-wrap {
+  position: relative;
+  width: var(--space-7);
+  height: var(--space-7);
+  flex-shrink: 0;
+}
+
+.notif-icon-wrap svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  transition: opacity var(--duration-slow) var(--ease-out-quart),
+    filter var(--duration-slow) var(--ease-out-quart),
+    transform var(--duration-slow) var(--ease-out-quart);
+}
+
+/* Icon swap (transitions-dev "Icon swap"), adapted to the existing
+   [data-notif-off] attribute instead of a generic data-state toggle: the
+   outgoing glyph shrinks and blurs out of its own slot instead of just
+   dissolving, so the two states read as one glyph morphing. */
+#notificationIconOff {
+  opacity: 0;
+  filter: blur(2px);
+  transform: scale(0.25);
+}
+
+.notif-badge[data-notif-off] #notificationIconOn {
+  opacity: 0;
+  filter: blur(2px);
+  transform: scale(0.25);
+}
+
+.notif-badge[data-notif-off] #notificationIconOff {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BANNERS
+═══════════════════════════════════════════════════════════ */
+
+/* ─── Shared structure ─── */
+
+.usage-alert-banner,
+.offline-banner,
+.update-banner,
+.download-banner {
+  display: flex;
+  align-items: initial;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--inner-light);
+}
+
+/* Enter/leave transition only — kept separate from the layout rule above so
+   #extraUsageCard (.quota-panel--extra) can share this exact treatment
+   without inheriting the banners' row layout, which would fight its own
+   .card/.quota-panel column layout. Reused, not duplicated: this is the same
+   rule the four banners use, just with the selector list extended. */
+.usage-alert-banner,
+.offline-banner,
+.update-banner,
+.download-banner,
+.quota-panel--extra {
+  transform-origin: top center;
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  transition: opacity var(--duration-banner-enter) var(--ease-out-quart),
+    transform var(--duration-banner-enter) var(--ease-out-quart);
+}
+
+/* @starting-style is the "from" of the old bannerEnter keyframe — it only
+   applies on first render, so a banner re-triggered while entering retargets
+   from its current value instead of restarting from zero. */
+@starting-style {
+  .usage-alert-banner,
+  .offline-banner,
+  .update-banner,
+  .download-banner,
+  .quota-panel--extra {
+    opacity: 0;
+    transform: translateY(-5px) scaleY(0.88);
+  }
+}
+
+/* The exit is deliberately faster than the enter — a banner going away
+   shouldn't linger. renderer.js sets [data-leaving] and removes the node
+   after --duration-banner-leave. */
+.usage-alert-banner[data-leaving],
+.offline-banner[data-leaving],
+.update-banner[data-leaving],
+.download-banner[data-leaving],
+.quota-panel--extra[data-leaving] {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition-duration: var(--duration-banner-leave);
+}
+
+/* These five are stacked block siblings, not floating toasts, so the full
+   Sonner-style stacking treatment (position math, z-index depth, a hover
+   spread) has no problem to solve here — they almost never overlap, and
+   when they do they stay in normal flow rather than needing to fan out.
+   renderBannersAndErrors can still flip more than one from hidden -> visible
+   in the same render pass (e.g. launching already offline and over quota),
+   which would otherwise pop them in on the same frame. A fixed per-banner
+   delay is the small, declarative fix: it makes that case cascade instead of
+   coincide. Zeroed on [data-leaving] — ID beats the class selector above, so
+   without this a dismiss would inherit the enter delay and appear to hang
+   before its (deliberately faster) exit. */
+#updateBanner,
+#downloadBanner {
+  transition-delay: 40ms;
+}
+#offlineBanner {
+  transition-delay: 80ms;
+}
+#updateBanner[data-leaving],
+#downloadBanner[data-leaving],
+#offlineBanner[data-leaving] {
+  transition-delay: 0s;
+}
+
+.usage-alert-text,
+.offline-banner-text,
+.update-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0);
+  min-width: 0;
+  flex: 1;
+}
+
+.usage-alert-title,
+.offline-banner-title,
+.update-banner-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+}
+
+.usage-alert-body,
+.offline-banner-body,
+.update-banner-body {
+  font-size: var(--text-sm);
+  color: inherit;
+  opacity: 0.8;
+  line-height: var(--leading-snug);
+}
+
+.usage-alert-dismiss,
+.offline-banner-dismiss,
+.update-banner-dismiss {
+  width: var(--space-9);
+  height: var(--space-9);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: inherit;
+  opacity: 0.6;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease), opacity var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.usage-alert-dismiss:hover,
+.offline-banner-dismiss:hover,
+.update-banner-dismiss:hover {
+  background: oklch(from currentColor l c h / 0.12);
+  opacity: 1;
+  filter: none;
+}
+
+.usage-alert-dismiss svg,
+.offline-banner-dismiss svg,
+.update-banner-dismiss svg {
+  width: var(--space-5);
+  height: var(--space-5);
+  fill: currentColor;
+}
+
+/* ─── Banner icon ─── */
+
+.banner-icon {
+  width: var(--space-7);
+  height: var(--space-7);
+  fill: currentColor;
+  flex-shrink: 0;
+  margin-top: var(--space-1);
+}
+
+/* ─── Banner variants ─── */
+
+.usage-alert-banner[data-level="warn"] {
+  background: var(--level-warn-soft);
+  color: var(--level-warn);
+}
+
+.usage-alert-banner[data-level="critical"] {
+  background: var(--destructive-soft);
+  color: var(--destructive);
+}
+
+.offline-banner {
+  background: var(--destructive-soft);
+  color: var(--destructive);
+}
+
+.update-banner {
+  background: var(--success-soft);
+  color: var(--success);
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--space-3);
+}
+
+.update-banner-header {
+  display: flex;
+  align-items: initial;
+  gap: var(--space-4);
+}
+
+.update-banner-download {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--foreground);
+  background: var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-4);
+  align-self: flex-start;
+  margin-top: var(--space-5);
+  cursor: pointer;
+  box-shadow: var(--inner-light);
+  transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.update-banner-download:hover {
+  background: var(--success);
+  color: var(--input);
+}
+
+.update-banner-download:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-0);
+  border-radius: var(--radius-xs);
+}
+
+.update-banner-download[data-state="downloading"] {
+  color: var(--success);
+  cursor: default;
+  pointer-events: none;
+}
+
+.download-banner {
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.download-banner-text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ERROR
+═══════════════════════════════════════════════════════════ */
+
+.error {
+  margin: 0;
+  padding: var(--space-7) var(--space-5);
+  background: var(--destructive-soft);
+  border: 1px solid var(--destructive-soft);
+  border-radius: var(--radius-lg);
+  color: var(--destructive);
+  font-size: var(--text-sm);
+}
+
+.error:empty {
+  display: none;
+}
+
+.reauth-button {
+  display: block;
+  width: calc(100% - 2 * var(--space-5));
+  margin: var(--space-3) var(--space-5) 0;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--destructive);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--destructive);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.reauth-button:hover {
+  background: color-mix(in srgb, var(--destructive) 10%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SETTINGS
+═══════════════════════════════════════════════════════════ */
+
+.settings-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-none) var(--space-1);
+}
+
+.settings-back {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-1) var(--space-5);
+}
+
+.settings-title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--subtle-foreground);
+  padding: var(--space-none) var(--space-5) var(--space-none) var(--space-none);
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: auto;
+  padding: var(--space-3) var(--space-7) var(--space-3) var(--space-5);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.back-btn:hover {
+  background: var(--accent-soft);
+  filter: none;
+}
+
+.back-btn svg {
+  width: var(--space-6);
+  height: var(--space-6);
+  fill: currentColor;
+}
+
+.settings-card {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8) var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  box-shadow: var(--inner-light);
+}
+
+.account-card {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  box-shadow: var(--inner-light);
+}
+
+/* The one recessed surface in the app: it sits inside .account-card rather
+   than on top of it, so it takes the light from below. */
+.account-inner {
+  background: var(--input);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--inner-light-up);
+  padding: var(--space-2) var(--space-2) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.account-name {
+  font-family: var(--font-pixel);
+  font-size: var(--text-3xl);
+  line-height: var(--leading-none);
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+  text-align: center;
+}
+
+.account-email {
+  font-size: var(--text-sm);
+  color: var(--subtle-foreground);
+  text-align: center;
+}
+
+.account-email-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.account-email-toggle .icon-view-off {
+  display: none;
+}
+
+.account-email-toggle[data-masked="true"] .icon-view {
+  display: none;
+}
+
+.account-email-toggle[data-masked="true"] .icon-view-off {
+  display: inline-flex;
+}
+
+.account-badge-row {
+  display: flex;
+  justify-content: center;
+}
+
+.plan-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--ring-soft);
+  color: var(--accent);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: 16px;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  height: auto;
+  margin-top: 0;
+  padding: var(--space-6) var(--space-9);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--card-foreground) 0%, var(--card-elevated) 100%);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  box-shadow: var(--inner-light);
+  transition: filter var(--duration-fast) var(--ease), transform var(--duration-press) var(--ease-press);
+}
+
+.btn-secondary:hover {
+  filter: brightness(1.15);
+  background: linear-gradient(180deg, var(--card-foreground) 0%, var(--card-elevated) 100%);
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+  filter: brightness(0.88);
+}
+
+.settings-select {
+  display: inline-flex;
+  align-items: center;
+  max-width: 140px;
+  background: transparent;
+  border: none;
+  color: var(--subtle-foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  cursor: pointer;
+}
+
+.settings-select:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-2);
+  border-radius: var(--radius-xs);
+}
+
+.settings-select option {
+  color: var(--foreground);
+  background: var(--card);
+  padding: var(--space-6) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  width: 100%;
+  padding: 0;
+  color: var(--foreground);
+  font-size: var(--text-sm);
+}
+
+.settings-divider {
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.settings-row-label {
+  color: var(--foreground);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.settings-path-block {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.settings-path-eyebrow {
+  margin-bottom: 0;
+  color: var(--subtle-foreground);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.settings-path-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.settings-path-value {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-version-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-6);
+}
+
+.settings-version-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--subtle-foreground);
+  white-space: nowrap;
+}
+
+.settings-github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-9);
+  height: var(--space-9);
+  color: var(--subtle-foreground);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease);
+  flex-shrink: 0;
+}
+
+.settings-github-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-0);
+  border-radius: var(--radius-xs);
+}
+
+.settings-github-link:hover {
+  color: var(--foreground);
+}
+
+.settings-github-link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLOATING WIDGET
+═══════════════════════════════════════════════════════════ */
+
+.floating-body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+  -webkit-app-region: drag;
+}
+
+.floating-widget {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: oklch(0 0 0 / 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--inner-light);
+  padding: var(--space-5) var(--space-5) 17px;
+}
+
+.floating-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: var(--space-5);
+}
+
+.floating-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.floating-logo {
+  width: var(--space-5);
+  height: var(--space-5);
+  display: block;
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.floating-label {
+  overflow: hidden;
+  color: var(--subtle-foreground);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--space-5);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.floating-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  -webkit-app-region: no-drag;
+}
+
+.floating-action-btn {
+  width: var(--space-5);
+  height: var(--space-5);
+  padding: 0;
+  border-radius: var(--space-0);
+  background: transparent;
+  color: var(--subtle-foreground);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.floating-action-btn:hover {
+  background: transparent;
+  color: var(--foreground);
+  filter: none;
+}
+
+.floating-action-btn svg {
+  width: var(--space-5);
+  height: var(--space-5);
+  fill: currentColor;
+}
+
+.floating-info {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: var(--space-8);
+  white-space: nowrap;
+  -webkit-app-region: no-drag;
+}
+
+.floating-percent-button {
+  height: auto;
+  padding: 0;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.floating-percent-button:hover {
+  background: transparent;
+  filter: none;
+}
+
+/* Tight line box so the suffix glyph bottom-aligns with the big percent */
+.floating-percent-button .quota-suffix {
+  line-height: var(--leading-none);
+}
+
+.floating-percent {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-none);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+
+.floating-percent::before,
+.floating-percent::after {
+  content: attr(data-value);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.floating-percent::before {
+  color: var(--border-strong);
+  transform: translate(0.75px, -0.75px);
+  clip-path: inset(0 0 55% 0);
+}
+
+.floating-percent::after {
+  color: var(--border-strong);
+  transform: translate(-0.75px, 0.75px);
+  clip-path: inset(48% 0 0 0);
+}
+
+.floating-reset {
+  max-width: 104px;
+  overflow: hidden;
+  color: var(--subtle-foreground);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-normal);
+  line-height: var(--space-5);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  text-overflow: ellipsis;
+}
+
+.floating-reset-label,
+.floating-reset-time {
+  color: inherit;
+}
+
+.floating-meter-bar {
+  display: flex;
+  gap: var(--space-0);
+  width: 100%;
+  height: var(--space-1);
+  margin-top: var(--space-0);
+}
+
+.floating-meter-bar .meter-segment {
+  flex: 1;
+  height: var(--space-1);
+  border-radius: 1px;
+  background: var(--level-ok-soft);
+}
+
+.floating-meter-bar .meter-segment.active {
+  background: var(--level-ok);
+}
+
+.floating-expanded-panel {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  margin-top: var(--space-5);
+  -webkit-app-region: no-drag;
+}
+
+.floating-expanded-panel[hidden] {
+  display: none;
+}
+
+.floating-metric {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  min-height: 31px;
+  border-top: 1px solid var(--border-strong);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.floating-metric-label {
+  overflow: hidden;
+  color: var(--subtle-foreground);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  line-height: var(--space-5);
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.floating-metric-value {
+  color: var(--subtle-foreground);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  line-height: var(--space-5);
+  white-space: nowrap;
+}
+
+.floating-expand-btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 17px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-none);
+  background: var(--border-subtle);
+  color: var(--subtle-foreground);
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+  transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.floating-expand-btn:hover {
+  background: var(--border-strong);
+  color: var(--foreground);
+  filter: none;
+}
+
+.floating-expand-btn svg {
+  width: var(--space-6);
+  height: var(--space-6);
+  fill: var(--foreground);
+  transition: transform var(--duration-fast) var(--ease);
+}
+
+.floating-body[data-expanded="true"] .floating-widget {
+  padding-bottom: 17px;
+}
+
+.floating-body[data-expanded="true"] .floating-meter-bar {
+  width: 100%;
+}
+
+.floating-body[data-expanded="true"] .floating-expand-btn svg {
+  transform: rotate(180deg);
+}
+
+/* The chevron above eases in over --duration-fast; without this the three
+   rows underneath snapped to full opacity the instant `hidden` cleared.
+   `animation`, not `transition` — `hidden` flips `display`, which a
+   transition cannot start from. Reuses `subtleFadeUp`, the same fade+rise
+   the entering home-view rows already use, with a small per-row stagger. */
+.floating-body[data-expanded="true"] .floating-metric {
+  animation: subtleFadeUp 160ms var(--ease-out) both;
+}
+.floating-body[data-expanded="true"] .floating-metric:nth-child(2) {
+  animation-delay: 40ms;
+}
+.floating-body[data-expanded="true"] .floating-metric:nth-child(3) {
+  animation-delay: 80ms;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════════════════ */
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--space-10);
+  padding: 0 var(--space-6);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-foreground);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  transition: filter var(--duration-fast) var(--ease), background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-0);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  min-height: var(--space-11);
+  padding: var(--space-4) 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: filter var(--duration-fast) var(--ease), transform var(--duration-press) var(--ease-press);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+  filter: brightness(0.92);
+}
+
+.btn-primary svg {
+  width: var(--space-6);
+  height: var(--space-6);
+  fill: currentColor;
+}
+
+.btn-primary img {
+  width: var(--space-7);
+  height: var(--space-7);
+  display: block;
+}
+
+.icon-button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--subtle-foreground);
+  transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.icon-button:hover {
+  background: var(--card-elevated);
+  color: var(--foreground);
+  filter: none;
+}
+
+.icon-button svg {
+  width: var(--space-7);
+  height: var(--space-7);
+  fill: currentColor;
+}
+
+/* ── Press feedback ─────────────────────────────────────────
+   One press gesture for the whole app: the surface scales down so the
+   click is acknowledged before anything else happens. Small targets get
+   a deeper scale — at 28px, 0.97 is under a pixel and reads as nothing. */
+.window-control-btn:active,
+.icon-button:active,
+.floating-action-btn:active,
+.usage-alert-dismiss:active,
+.offline-banner-dismiss:active,
+.update-banner-dismiss:active {
+  transform: scale(0.94);
+}
+
+.auth-button-stack .btn-save:active,
+.auth-button-stack .btn-cancel:active,
+.back-btn:active,
+.notif-badge:active,
+.reauth-button:active,
+.update-banner-download:active,
+.settings-tab:active,
+.settings-test-btn:active,
+.settings-style-card:active,
+.floating-expand-btn:active {
+  transform: scale(0.97);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SWITCH
+═══════════════════════════════════════════════════════════ */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: var(--space-9);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.switch-track {
+  position: absolute;
+  inset: 2.5px 0 auto;
+  height: 19px;
+  background: var(--muted-foreground);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--inner-light);
+  transition: background var(--duration-slow) var(--ease);
+}
+
+.switch-thumb {
+  position: absolute;
+  top: 1.5px;
+  left: 1.5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--foreground);
+  transform-origin: left center;
+  transition: transform var(--duration-normal) var(--ease-out),
+    background var(--duration-slow) var(--ease);
+}
+
+/* Squash under the finger — the toggle answers the press before it flips.
+   Scaled instead of resized (19/16 = 1.1875) so it's a compositor-only transform. */
+.switch:active .switch-thumb {
+  transform: scaleX(1.1875);
+}
+
+.switch:active input:checked + .switch-track .switch-thumb {
+  transform: translateX(10px) scaleX(1.1875);
+}
+
+.switch input:checked + .switch-track {
+  background: var(--accent);
+}
+
+.switch input:checked + .switch-track .switch-thumb {
+  transform: translateX(13px);
+  background: oklch(15% 0.01 270);
+}
+
+.switch input:disabled + .switch-track {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.switch input:focus-visible + .switch-track {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   METER
+═══════════════════════════════════════════════════════════ */
+
+/* Typed custom properties enable OKLCH-space interpolation during level transitions.
+   --seg-* inherits and transitions on .meter itself, so all 40 segments inherit an
+   already-interpolated value instead of each running its own copy of the transition. */
+@property --seg-l { syntax: '<percentage>'; inherits: true; initial-value: 84.59%; }
+@property --seg-c { syntax: '<number>'; inherits: true; initial-value: 0.2026; }
+@property --seg-h { syntax: '<number>'; inherits: true; initial-value: 156.3; }
+@property --quota-l { syntax: '<percentage>'; inherits: false; initial-value: 90%; }
+@property --quota-c { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --quota-h { syntax: '<number>'; inherits: false; initial-value: 156; }
+
+.meter {
+  position: relative;
+  display: flex;
+  gap: 1px;
+  /* Matches `.meter-segment`'s height. A segment with an explicit height opts
+     out of flex `stretch`, so an 8px track held 10px segments that overflowed
+     2px past the bottom — leaving `::before` (inset-block: 0) 2px shorter than
+     the bar it haloes, and `meterReveal`'s `transform-origin: bottom` pivoting
+     below the glow's baseline. */
+  height: var(--space-4);
+  --seg-l: 84.59%;
+  --seg-c: 0.2026;
+  --seg-h: 156.3;
+  transition: --seg-l 900ms var(--ease-out-quart),
+    --seg-c 900ms var(--ease-out-quart),
+    --seg-h 900ms var(--ease-out-quart);
+}
+
+/* One glow for the whole filled run, not one per segment: the halo reads as a
+   single mass anyway, and 40 blurred layers would be 40 filters repainting on
+   every refresh. Width mirrors the flex math — each segment is (100% + 1px)/40
+   wide counting its gap, minus the trailing gap. Scoped to `.meter` so the
+   floating widget, which shares `.meter-segment`, stays flat. */
+.meter::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: calc((100% + 1px) * var(--filled, 0) / 40 - 1px);
+  border-radius: 999px;
+  background: oklch(var(--seg-l) var(--seg-c) var(--seg-h));
+  opacity: 0.5;
+  filter: blur(8px);
+  pointer-events: none;
+  transition: width 250ms var(--ease-out-quart);
+}
+
+.meter-segment {
+  position: relative; /* paints above ::before without a z-index fight */
+  flex: 1;
+  height: var(--space-4);
+  border-radius: 999px;
+  background: var(--level-ok-soft);
+  transition: background-color 250ms var(--ease-out-quart);
+}
+
+.meter-segment.active {
+  background: oklch(var(--seg-l) var(--seg-c) var(--seg-h));
+}
+
+/* The fill colour is already interpolated once, on `.meter`'s --seg-* over
+   900ms. Letting the segment run its own background-color transition on top
+   made it chase a moving target: ~1150ms of drift against the halo's clean
+   900ms, so segments and glow landed on the new level at different times.
+   Dropping the transition here costs the 250ms fade when a segment lights up —
+   a discrete segment clicking on is arguably the truer read anyway, and the
+   halo still sweeps in 250ms underneath. Scoped to `.meter` so the floating
+   widget, which has no --seg-* drift to fight, keeps its plain fade. */
+.meter > .meter-segment.active {
+  transition: none;
+}
+
+.meter[data-level="warn"] {
+  --seg-l: 88%;
+  --seg-c: 0.163;
+  --seg-h: 92;
+}
+
+.meter[data-level="warn"] .meter-segment,
+.floating-meter-bar[data-level="warn"] .meter-segment {
+  background: var(--level-warn-soft);
+}
+
+.meter[data-level="warn"] .meter-segment.active {
+  background: oklch(var(--seg-l) var(--seg-c) var(--seg-h));
+}
+
+.floating-meter-bar[data-level="warn"] .meter-segment.active {
+  background: var(--level-warn);
+}
+
+.meter[data-level="high"] {
+  --seg-l: 72%;
+  --seg-c: 0.181;
+  --seg-h: 46;
+}
+
+.meter[data-level="high"] .meter-segment,
+.floating-meter-bar[data-level="high"] .meter-segment {
+  background: var(--level-high-soft);
+}
+
+.meter[data-level="high"] .meter-segment.active {
+  background: oklch(var(--seg-l) var(--seg-c) var(--seg-h));
+}
+
+.floating-meter-bar[data-level="high"] .meter-segment.active {
+  background: var(--level-high);
+}
+
+.meter[data-level="critical"] {
+  --seg-l: 58%;
+  --seg-c: 0.214;
+  --seg-h: 17;
+}
+
+.meter[data-level="critical"] .meter-segment,
+.floating-meter-bar[data-level="critical"] .meter-segment {
+  background: var(--level-critical-soft);
+}
+
+.meter[data-level="critical"] .meter-segment.active {
+  background: oklch(var(--seg-l) var(--seg-c) var(--seg-h));
+}
+
+.floating-meter-bar[data-level="critical"] .meter-segment.active {
+  background: var(--level-critical);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   VOLUME SLIDER
+═══════════════════════════════════════════════════════════ */
+
+.settings-test-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-7) var(--space-3) var(--space-5);
+  border: none;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease),
+    transform var(--duration-press) var(--ease-press);
+}
+
+.settings-test-btn:hover {
+  background: var(--card-elevated);
+  color: var(--foreground);
+  filter: none;
+}
+
+.settings-test-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-0);
+  border-radius: var(--radius-xs);
+}
+
+.settings-test-btn svg {
+  width: var(--space-7);
+  height: var(--space-7);
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.settings-volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    to right,
+    var(--accent) 0%,
+    var(--accent) var(--slider-fill, 100%),
+    var(--border-strong) var(--slider-fill, 100%),
+    var(--border-strong) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+
+.settings-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--foreground);
+  cursor: pointer;
+  box-shadow: var(--inner-light);
+}
+
+.settings-volume-slider:disabled {
+  cursor: not-allowed;
+  background: linear-gradient(
+    to right,
+    var(--accent-soft) 0%,
+    var(--accent-soft) var(--slider-fill, 100%),
+    var(--border-strong) var(--slider-fill, 100%),
+    var(--border-strong) 100%
+  );
+}
+
+.settings-volume-slider:disabled::-webkit-slider-thumb {
+  background: var(--muted-foreground);
+}
+
+.settings-row:has(.settings-volume-slider:disabled) .settings-row-label {
+  color: var(--muted-foreground);
+}
+
+.settings-volume-slider:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-1);
+  border-radius: var(--radius-pill);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TEXTAREA
+═══════════════════════════════════════════════════════════ */
+
+textarea {
+  width: 100%;
+  resize: none;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--input);
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease);
+}
+
+textarea:focus {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px var(--ring-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CODE FORM
+═══════════════════════════════════════════════════════════ */
+
+.code-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.code-form label {
+  color: var(--subtle-foreground);
+  font-size: var(--text-sm);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════════════ */
+
+@keyframes windowEnter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-3));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes numberReveal {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(0.95);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes subtleFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes meterReveal {
+  from {
+    opacity: 0;
+    transform: scaleY(0.35);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes meterRevealActive {
+  0%   { opacity: 0; transform: scaleY(0.35); }
+  68%  { opacity: 1; transform: scaleY(1.14); }
+  100% { opacity: 1; transform: scaleY(1); }
+}
+
+body[data-entering] {
+  animation: windowEnter var(--duration-enter) var(--ease-out) both;
+}
+
+body[data-entering] #sessionPercent {
+  animation: numberReveal 200ms cubic-bezier(0.22, 1, 0.36, 1) 310ms both;
+}
+body[data-entering] #sessionPace {
+  animation: subtleFadeUp 160ms var(--ease-out) 240ms both;
+}
+body[data-entering] #sessionMeter .meter-segment {
+  transform-origin: bottom;
+  animation: meterReveal 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 6ms + 230ms);
+}
+body[data-entering] #sessionMeter .meter-segment.active {
+  animation: meterRevealActive 210ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 6ms + 230ms);
+}
+
+body[data-entering] #weeklyPercent {
+  animation: numberReveal 200ms cubic-bezier(0.22, 1, 0.36, 1) 380ms both;
+}
+body[data-entering] #weeklyMeter .meter-segment {
+  transform-origin: bottom;
+  animation: meterReveal 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 6ms + 295ms);
+}
+body[data-entering] #weeklyMeter .meter-segment.active {
+  animation: meterRevealActive 210ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 6ms + 295ms);
+}
+
+body[data-entering] #todayCost {
+  animation: numberReveal 200ms cubic-bezier(0.22, 1, 0.36, 1) 440ms both;
+}
+body[data-entering] #monthCost {
+  animation: numberReveal 200ms cubic-bezier(0.22, 1, 0.36, 1) 470ms both;
+}
+body[data-entering] #todayTokens {
+  animation: subtleFadeUp 160ms var(--ease-out) 350ms both;
+}
+body[data-entering] #monthTokens {
+  animation: subtleFadeUp 160ms var(--ease-out) 380ms both;
+}
+
+@keyframes dataUpdate {
+  0%   { opacity: 0.4;  filter: brightness(1.5); }
+  55%  { opacity: 1;    filter: brightness(1.07); }
+  100% { opacity: 1;    filter: brightness(1); }
+}
+
+.data-updated {
+  animation: dataUpdate 200ms var(--ease-out-quart) both;
+}
+
+/* ── Refresh icon spin ──────────────────────────────────── */
+
+@keyframes iconSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* `linear infinite`: a spinner reports "still working", so it must not ease
+   to a crawl mid-refresh, and it must not stop before the work does. The JS
+   holds `data-refreshing` until the current turn lands back on 0deg, so the
+   icon never snaps mid-rotation. */
+body[data-refreshing="true"] #refreshButton svg {
+  animation: iconSpin var(--duration-spin) linear infinite;
+  transform-origin: center;
+}
+
+/* ── Notif-badge toggle pop ─────────────────────────────── */
+
+@keyframes notifPop {
+  0%   { transform: scale(1); }
+  38%  { transform: scale(0.89); }
+  68%  { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+
+.notif-badge.notif-pop {
+  animation: notifPop 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Session reset reveal ───────────────────────────────── */
+
+@keyframes sessionResetReveal {
+  0%   { opacity: 0.45; filter: brightness(1.8); }
+  45%  { opacity: 1;    filter: brightness(1.12); }
+  100% { opacity: 1;    filter: brightness(1); }
+}
+
+#sessionPercent[data-just-reset] {
+  animation: sessionResetReveal 750ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Critical meter pulse ───────────────────────────────── */
+
+/* The wave travelling across the segments is the point — a single breathing
+   halo costs one composited layer instead of forty but reads as a different,
+   quieter thing. Forty it is; the two fixes that came with the halo stay.
+
+   `body:not([data-entering])` is the first. Without it this selector (0,1,4,0)
+   outranked `body[data-entering] #sessionMeter .meter-segment.active` (0,1,3,1),
+   so at exactly 100% the session bar was the one element on screen that skipped
+   its entrance reveal. Now the two can never match at once, and the wave builds
+   in from the left once the entrance has dropped `data-entering` at 900ms.
+
+   42.5ms is the second: 40 segments must span exactly one 1700ms period, or the
+   last segment and the first sit at unrelated phases and the wave shows a seam
+   where it wraps. At the old 32ms the span was 1248ms and the seam was visible. */
+@keyframes criticalPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+body:not([data-entering]) #sessionMeter[data-level="critical"][data-filled="40"] .meter-segment.active {
+  animation: criticalPulse 1700ms ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 42.5ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:not([data-entering]) #sessionMeter[data-level="critical"][data-filled="40"] .meter-segment.active {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    /* Renderer timers read these two values. Zero keeps view and tab state
+       changes immediate without relying on a near-zero global animation. */
+    --duration-view-fade: 0ms;
+    --duration-tab-fade: 0ms;
+  }
+
+  .view,
+  .quota-percent,
+  .card::after,
+  .cost-info-btn,
+  .tooltip,
+  .tooltip[data-show="true"],
+  .notif-badge,
+  .notif-icon-wrap svg,
+  .onboard-url-copy svg,
+  .usage-alert-banner,
+  .offline-banner,
+  .update-banner,
+  .download-banner,
+  .quota-panel--extra,
+  .usage-alert-dismiss,
+  .offline-banner-dismiss,
+  .update-banner-dismiss,
+  .update-banner-download,
+  .reauth-button,
+  .back-btn,
+  .btn-secondary,
+  .floating-action-btn,
+  .floating-expand-btn,
+  .floating-expand-btn svg,
+  button,
+  .switch-track,
+  .switch-thumb,
+  .meter,
+  .meter::before,
+  .meter-segment,
+  .settings-test-btn,
+  textarea,
+  .settings-tab,
+  .settings-tab-pill,
+  .settings-tab-panel,
+  .settings-tabs-card[data-resizing],
+  .settings-style-card {
+    transition: none;
+  }
+
+  body[data-entering],
+  body[data-entering] #sessionPercent,
+  body[data-entering] #sessionPace,
+  body[data-entering] #sessionMeter .meter-segment,
+  body[data-entering] #sessionMeter .meter-segment.active,
+  body[data-entering] #weeklyPercent,
+  body[data-entering] #weeklyMeter .meter-segment,
+  body[data-entering] #weeklyMeter .meter-segment.active,
+  body[data-entering] #todayCost,
+  body[data-entering] #monthCost,
+  body[data-entering] #todayTokens,
+  body[data-entering] #monthTokens,
+  .data-updated,
+  body[data-refreshing="true"] #refreshButton svg,
+  .notif-badge.notif-pop,
+  #sessionPercent[data-just-reset],
+  .floating-body[data-expanded="true"] .floating-metric,
+  #onboardCodeInput.is-shaking {
+    animation: none;
+  }
+
+  .window-control-btn:active,
+  .icon-button:active,
+  .floating-action-btn:active,
+  .usage-alert-dismiss:active,
+  .offline-banner-dismiss:active,
+  .update-banner-dismiss:active,
+  .footer-link:active,
+  .footer-quit-btn:active,
+  .btn-primary:active,
+  .btn-secondary:active,
+  .auth-button-stack .btn-save:active,
+  .auth-button-stack .btn-cancel:active,
+  .back-btn:active,
+  .notif-badge:active,
+  .reauth-button:active,
+  .update-banner-download:active,
+  .settings-tab:active,
+  .settings-test-btn:active,
+  .settings-style-card:active,
+  .floating-expand-btn:active {
+    transform: none;
+  }
+
+  .switch:active .switch-thumb {
+    transform: none;
+  }
+
+  .switch:active input:checked + .switch-track .switch-thumb {
+    transform: translateX(13px);
+  }
+}
+
+/* A touch screen fires :hover on tap and holds it until the next tap, so the
+   brightness lift sticks to whatever was last pressed. The press scale already
+   carries the feedback there — drop the lift rather than let it linger. */
+@media (hover: none) {
+  button:hover,
+  .footer-link:hover,
+  .footer-quit-btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .auth-button-stack .btn-save:hover {
+    filter: none;
+  }
+}
+
+/* ── Settings tabs ─────────────────────────────────────── */
+.settings-tabs {
+  position: relative;
+  display: flex;
+  gap: var(--space-none);
+  padding: var(--space-1);
+  background: var(--card-foreground);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--inner-light);
+  margin: var(--space-none) var(--space-none) var(--space-10);
+  /* Which third the pill sits over. switchSettingsTab writes 0/1/2; this is
+     just the default so the pill matches the System tab that's active on
+     first paint, before any tab switch has happened. */
+  --tab-index: 0;
+}
+
+/* The pill: a static width of one third of the bar's content box (the three
+   tabs are equal flex thirds with no gap), moved with translateX only — 0 /
+   100% / 200% lands it exactly on tab 0/1/2. No JS measurement needed. Sits
+   under the tab labels (z-index: 0) so text stays legible while it travels. */
+.settings-tab-pill {
+  position: absolute;
+  top: var(--space-1);
+  left: var(--space-1);
+  width: calc((100% - var(--space-1) * 2) / 3);
+  height: calc(100% - var(--space-1) * 2);
+  border-radius: var(--radius-pill);
+  background: var(--border-strong);
+  box-shadow: var(--inner-light);
+  transform: translateX(calc(var(--tab-index) * 100%));
+  transition: transform var(--duration-normal) var(--ease-out);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.settings-tab {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding: var(--space-4) var(--space-none);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--subtle-foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: color 120ms ease, transform var(--duration-press) var(--ease-press);
+}
+
+.settings-tab--active {
+  color: var(--foreground);
+}
+
+.settings-tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  transition: opacity var(--duration-tab-fade) var(--ease-out);
+}
+
+.settings-tabs-card {
+  /* Anchors the outgoing panel during the tab crossfade — switchSettingsTab
+     parks it out of flow so the incoming panel can come up underneath it.
+     The height transition is the Container-Follows-Content Rule (DESIGN.md
+     §5): it rides the same --duration-tab-fade token the opacity crossfade
+     reads via cssMs(), so the two can never drift apart, and JS writes the
+     start/target height explicitly rather than transitioning to auto. The
+     transition itself is gated on [data-resizing], which switchSettingsTab
+     sets only for the length of a swap: the rule authorizes the card to
+     follow its content mid-crossfade, not to rubber-band every time a window
+     resize reflows the panel's text. */
+  position: relative;
+  padding: var(--space-8) var(--space-6);
+  gap: var(--space-none);
+}
+
+.settings-tabs-card[data-resizing] {
+  transition: height var(--duration-tab-fade) var(--ease-out);
+}
+
+/* ── Style picker ─────────────────────────────────────── */
+.settings-style-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.settings-section-heading {
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  color: var(--foreground);
+}
+
+.settings-section-eyebrow {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--subtle-foreground);
+}
+
+.settings-style-picker {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.settings-style-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--space-5);
+  height: auto;
+  /* The border stays in the box at 1px transparent so selecting a card can't
+     shift the row by a pixel. Resting, the card is drawn by --inner-light;
+     selected, the accent ring takes over and the light steps aside, so the
+     two edge treatments never stack. */
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  background: var(--card);
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  cursor: pointer;
+  text-align: left;
+  box-shadow: var(--inner-light);
+  transition: border-color 120ms ease, box-shadow 120ms ease,
+    transform var(--duration-press) var(--ease-press);
+}
+
+.settings-style-card[data-active="true"] {
+  border-color: var(--accent);
+  box-shadow: none;
+}
+
+.settings-style-card:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: var(--space-0);
+  border-radius: var(--radius-xs);
+}
+
+.settings-style-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  color: var(--subtle-foreground);
+}
+
+.settings-style-preview--classic {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-none);
+  width: 100%;
+}
+
+.settings-style-preview--mini {
+  display: flex;
+  gap: 2px;
+  padding: var(--space-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  width: 50%;
+}
+
+/* ── Preview bar primitives ── */
+.ssp-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.ssp-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0);
+}
+
+.ssp-bar {
+  background: var(--card-foreground);
+  height: 14px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.ssp-bar--flex  { flex: 1 0 0; width: auto; }
+.ssp-bar--w24   { width: 24px; }
+.ssp-bar--h3    { height: 3px; }
+.ssp-bar--h9    { height: 9px; }
+.ssp-bar--h10   { height: 10px; }
+
+/* ── Mini floating widget ─────────────────────────────── */
+.floating-mini-row {
+  display: none;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-none);
+  background: oklch(0 0 0 / 0.85);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  -webkit-app-region: drag;
+}
+
+body[data-style="mini"] .floating-mini-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+body[data-style="mini"] .floating-widget {
+  display: none;
+}
+
+.floating-mini-drag-icon {
+  width: var(--space-5);
+  height: var(--space-5);
+  color: var(--subtle-foreground);
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.floating-mini-icon {
+  width: var(--space-5);
+  height: var(--space-5);
+  flex-shrink: 0;
+}
+
+.floating-mini-percent {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--foreground);
+  -webkit-app-region: drag;
+}
+
+/* Weekly (7-day) quota beside the session percent, split off by a hairline. */
+.floating-mini-weekly-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: var(--space-1);
+  -webkit-app-region: drag;
+}
+
+.floating-mini-weekly-group::before {
+  content: "";
+  width: 1px;
+  height: var(--space-5);
+  margin-right: var(--space-0);
+  background: var(--border-strong);
+}
+
+.floating-mini-weekly-icon {
+  width: var(--space-5);
+  height: var(--space-5);
+  flex-shrink: 0;
+}
+
+.floating-mini-weekly[data-level="warn"]     { color: var(--level-warn); }
+.floating-mini-weekly[data-level="high"]     { color: var(--level-high); }
+.floating-mini-weekly[data-level="critical"] { color: var(--level-critical); }
